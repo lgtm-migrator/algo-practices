@@ -1,3 +1,5 @@
+from typing import List
+
 
 def bubble_sort(list: List[int]) -> List[int]:
   change = True
