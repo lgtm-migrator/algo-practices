@@ -1,5 +1,5 @@
 
-def bubble_sort(list: List<int>) -> List<int>:
+def bubble_sort(list: List[int]) -> List[int]:
   change = True
   while change:
     change = False
