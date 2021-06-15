@@ -30,4 +30,5 @@ jobs:
         with:
           python-version: '3.x'
       - run: python sort.py
+      - run: python test.py
 
