@@ -39,7 +39,7 @@ def binary_search(list: List[int], low: int, high: int, element: int):
         return binary_search(list, low, mid-1, element)
 
 
-def insert_sort(list: List[int()]) -> List[int]:
+def insert_sort(list: List[int]) -> List[int]:
     for i in range(1, len(list)):
         element = list[i]
         # search index where to insert the element.
