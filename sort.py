@@ -22,21 +22,25 @@ def select_sort(list: List[int]) -> List[int]:
     return list
 
 
-def binary_search(list: List[int], low: int, high: int, element: int):
+def binary_search(list: List[int], low: int, high: int, element: int) -> int:
     # Reached to the last operation
     if low == high:
         if list[low] > element:
             return low
         else:
             return low + 1
+    elif low > high:
+        return low
 
-    mid = (low + high)/2
+    mid = (low + high)//2
     # check whether middle value is greater than the element. If so, we skip to the half of lower elements.
     if list[mid] < element:
         return binary_search(list, mid+1, high, element)
     # The case middle value is smaller than the element is same way as the above.
-    else:
+    elif list[mid] > element:
         return binary_search(list, low, mid-1, element)
+    else:
+        return mid
 
 
 def insert_sort(list: List[int]) -> List[int]:
@@ -45,7 +49,7 @@ def insert_sort(list: List[int]) -> List[int]:
         # search index where to insert the element.
         index = binary_search(list, 0, i-1, element)
         # Update the list by merging [element] into list[0:index] .... list[index:i] + list[i+1:]←not yet sorted
-        list[:] = list[0:index] + [element] + list[index+1:i] + list[i+1:]
+        list[:] = list[:index] + [element] + list[index:i] + list[i+1:]
     return list
 
 
@@ -57,7 +61,7 @@ def quick_sort(list: List[int]) -> List[int]:
         return list
 
     # In this case, the reference value is at the middle of list.
-    ref = list[(0+length)/2]
+    ref = list[(0+length)//2]
     # Store same values as reference value in list.
     ref_list = []
 
