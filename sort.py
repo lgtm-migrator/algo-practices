@@ -47,3 +47,28 @@ def insert_sort(list: List[int()]) -> List[int]:
         # Update the list by merging [element] into list[0:index] .... list[index:i] + list[i+1:]←not yet sorted
         list[:] = list[0:index] + [element] + list[index+1:i] + list[i+1:]
     return list
+
+
+def quick_sort(list: List[int]) -> List[int]:
+    left = []
+    right = []
+    length = len(list)
+    if (length <= 1):
+        return list
+
+    # In this case, the reference value is at the middle of list.
+    ref = list[(0+length)/2]
+    # Store same values as reference value in list.
+    ref_list = []
+
+    for num in list:
+        if num < ref:
+            left.append(num)
+        elif num > ref:
+            right.append(num)
+        else:
+            ref_list.append(num)
+    left = quick_sort(left)
+    right = quick_sort(right)
+
+    return left + ref_list + right
