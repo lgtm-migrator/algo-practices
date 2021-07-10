@@ -30,6 +30,6 @@ jobs:
         with:
           python-version: '3.x'
       - run: python sort.py
-      - run: python ListNode.py
+      - run: python list_node.py
       - run: python test.py
 
