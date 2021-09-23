@@ -20,17 +20,4 @@ def preorder(root: ListNode) -> List[int]:
       stack.append(node.left)
       
   return ret
-
-def inorder(root: ListNode) -> List[int]:
-  ret, stack = []
-  
-  while True:
-    while root:
-      stack.append(root)
-      root = root.left
-    if not stack:
-      return ret
-    node = stack.pop()
-    ret.append(node.val)
-    root = root.right
       
