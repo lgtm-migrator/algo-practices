@@ -28,7 +28,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2.2.2
         with:
-          python-version: '3.x'
-      - run: python sort.py
-      - run: python test.py
+          python-version: '3.9'
+      - run: python ./sort/sort.py
+      - run: python ./sort/test.py
 
