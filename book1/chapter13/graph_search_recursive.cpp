@@ -7,6 +7,7 @@ using Graph = vector<vector<int>>;
 
 vector<bool> seen;
 
+// 深さ優先探索は再帰が似合う
 void dfs(const Graph &graph, int v)
 {
     seen[v] = true;
