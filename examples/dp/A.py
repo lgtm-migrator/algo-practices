@@ -1,7 +1,7 @@
 from typing import List
 
 
-def logic(n: int, costs: List[int]) -> int:
+def logic_A(n: int, costs: List[int]) -> int:
     dp: List[int] = list(map(lambda e: 1e+7, range(1, n+1)))
     dp[0] = 0
     for i in range(1, n):
@@ -16,4 +16,4 @@ def logic(n: int, costs: List[int]) -> int:
 if __name__ == "__main__":
     N = int(input())
     h_list: List[int] = list(map(int, input().split()))
-    print(logic(N, h_list))
+    print(logic_A(N, h_list))
