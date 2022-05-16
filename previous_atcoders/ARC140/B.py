@@ -1,30 +1,21 @@
 N = int(input())
-S = input()
+S = list(map(str, input()))
 
-ret = 0
-s = 1
-count = len(S.split("ARC"))
-S.replace("ARC", "AC", count//2)
-ret += count//2
-S.replace("ARC", "R", count//2)
-ret += count//2
+# Rの位置を把握する
+rlist = []
+for i, c in enumerate(S):
+    if i == 0 or i == N - 1:
+        continue
+    if c == "R":
+        l = i-1
+        while l >= 0 and S[l] == "A":
+            l -= 1
+        r = i+1
+        while r < N and S[r] == "C":
+            r += 1
+        r = min(i - (l + 1), (r - 1) - i)
+        rlist.append(r)
 
-while True:
-    can = -1
-    for i in range(s, len(S)-1):
-        arc = S[i-1] + S[i] + S[i+1]
-        if arc == "ARC":
-            can = i
-            break
-    if can == -1:
-        break
-    ret += 1
-    if ret % 2 == 0:
-        S = S.replace("ARC", "AC", 1)
-        s = can + 2
-    else:
-        S = S.replace("ARC", "R", 1)
-        s = can - 1
+ans = min(sum(rlist), 2 * len(rlist))
 
-
-print(ret)
+print(ans)
