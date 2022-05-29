@@ -25,7 +25,7 @@ int main()
 
     Graph G(N);
 
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < M; i++)
     {
         int a, b;
         cin >> a >> b;
