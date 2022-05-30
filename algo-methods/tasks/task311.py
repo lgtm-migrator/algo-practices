@@ -6,12 +6,12 @@ inf = 2 ** 30
 dp = [[inf] * (M+1) for i in range(N+1)]
 dp[0][0] = 0
 
-for i in range(1, N+1):
-    for m in range(1, M+1):
+for i in range(0, N):
+    for m in range(0, M+1):
         num = nums[i]
-        dp[i][m] = min(dp[i-1][m], dp[i][m])
+        dp[i+1][m] = min(dp[i][m], dp[i+1][m])
         if m >= num:
-            dp[i][m] = min(dp[i-1][m - num] + 1, dp[i][m])
+            dp[i+1][m] = min(dp[i][m - num] + 1, dp[i+1][m])
 
 if dp[N][M] == inf:
     dp[N][M] = -1
