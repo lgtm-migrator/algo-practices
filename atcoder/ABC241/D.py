@@ -1,55 +1,87 @@
 from heapq import heappop, heappush, heapify
 
 
+# binaryのTrie木
+class BinaryTrie:
+
+    def __init__(self, bit_depth):
+        # [0-child, 1-child, count]
+        self.root = [None, None, 0]
+        # 2^(n-1)
+        self.bit_start = 1 << (bit_depth - 1)
+        self.bit_depth = bit_depth
+        self.xor_mask = 0
+
+    def add(self, x: int):
+        b = self.bit_start
+        node = self.root
+        node[2] += 1
+        while b:
+            i = bool(x & b)
+            if node[i] is None:
+                node[i] = [None, None, 1]
+            else:
+                node[i][2] += 1
+            node = node[i]
+            b >>= 1
+
+    def pop_min(self):
+        """
+        xor_maskを適用後の最小値を適用前の値で取得し、木からは削除
+        """
+        b = self.bit_start
+        node = self.root
+        m = self.xor_mask
+        ret = 0
+        node[2] -= 1
+        while b:
+            i = bool(m & b)
+            if node[i] is None:
+                i ^= 1
+            ret = (ret << 1) + i
+
+            if node[i][2] > 1:
+                node[i][2] -= 1
+                node = node[i]
+            else:
+                tmp = node[i]
+                node[i] = None
+                node = tmp
+            b >>= 1
+        return ret
+
+    def get_min(x: int):
+        """
+        xor_maskを適用後の最小値を取得
+        """
+        b = self.bit_start
+        node = self.root
+        m = self.xor_mask
+        ret = 0
+        while b:
+            i = bool(m & b)
+            ret = ret << 1
+            if node[i] is None:
+                i ^= 1
+                ret += 1
+            node = node[i]
+            b >>= 1
+        return ret
+
+
 G = []
 
 
 def ope_1(x: int):
-    heappush(G, x)
+    pass
 
 
 def ope_2(x: int, k: int):
-    tmp_G = list(map(lambda num: num * -1, filter(lambda a: a <= x, G)))
-    if len(tmp_G) == 0:
-        print(-1)
-        return
-    heapify(tmp_G)
-    called = set()
-    best = heappop(tmp_G) * -1
-    called.add(best)
-    cnt = G.count(best)
-    while cnt < k:
-        if len(tmp_G) == 0:
-            print(-1)
-            return
-        best = heappop(tmp_G) * -1
-        if best in called:
-            continue
-        cnt += G.count(best)
-        called.add(best)
-    print(best)
+    pass
 
 
 def ope_3(x: int, k: int):
-    tmp_G = list(filter(lambda a: a >= x, G))
-    if len(tmp_G) == 0:
-        print(-1)
-        return
-    heapify(tmp_G)
-    called = set()
-    best = heappop(tmp_G)
-    called.add(best)
-    cnt = G.count(best)
-    while cnt < k:
-        if len(tmp_G) == 0:
-            print(-1)
-            return
-        best = heappop(tmp_G)
-        if best in called:
-            continue
-        cnt += G.count(best)
-        called.add(best)
-    print(best)
+    pass
 
 
 Q = int(input())
