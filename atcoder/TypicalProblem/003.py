@@ -58,22 +58,16 @@ def bfs(start: City):
     return longest, l
 
 
-memo = dict()
-
 ans = 0
-for city in cities:
-    if memo.get(city.num) is not None:
-        ans = max(ans, memo[city.num])
-        continue
-    # print("city index:", city.num)
-    longest, city_indexes = bfs(city)
-    # print("longest", longest)
-    # print("city_indexes", city_indexes)
-    for city_i in city_indexes:
-        l_city = City(city_i)
-        _, return_city_indexes = bfs(l_city)
-        if city.num in return_city_indexes:
-            ans = max(longest, ans)
-            memo[city_i] = longest
+# 末端を見つける。cityはなんでも良い
+city = cities[0]
+# print("city index:", city.num)
+longest, city_indexes = bfs(city)
+# print("city_indexes", city_indexes)
+city_i = city_indexes[0]
+l_city = City(city_i)
+longest, _ = bfs(l_city)
+# print("longest", longest)
+ans = max(longest, ans)
 
 print(ans+1)
