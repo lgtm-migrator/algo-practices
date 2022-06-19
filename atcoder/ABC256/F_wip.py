@@ -6,7 +6,9 @@ memo = dict()
 
 
 def calc_sum(i: int) -> int:
-    nums[:i+1]
+
+    for j in range(i):
+        calc_sum(j)
 
 
 def cmd1(x: int, v: int):
@@ -15,8 +17,3 @@ def cmd1(x: int, v: int):
 
 def cmd2(x: int):
     pass
-
-
-for command, inputs in input().split():
-    if command == 1:
-    else:
