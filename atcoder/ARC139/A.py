@@ -1,27 +1,19 @@
-import sys
+from math import gcd
 
 
 N = int(input())
 T_list = list(map(int, input().split()))
 
-before = 0
-before_digit = 1
-
-A_list = []
+last = 0
 
 for t in T_list:
     num = 1 << t
-    while num <= before:
-        if before_digit == t:
-            num += 1 << (before_digit + 1)
-        elif before_digit > t:
-            num += 1 << before_digit
-        else:
-            num += 1 << (t + 1)
-    # print("before", format(before, "b"))
-    A_list.append(num)
-    # print("num", format(num, "b"))
-    before = num
-    before_digit = t
+    y_1 = ((last // num) + 1) * num
+    y_2 = y_1 + num
+    nxt = 1 << (t + 1)
+    if y_1 % nxt != 0:
+        last = y_1
+    elif y_2 % nxt != 0:
+        last = y_2
 
-print(A_list[-1])
+print(last)
