@@ -20,3 +20,9 @@ input = sys.stdin.readline
 
 INF = 2 << 60
 MOD = 998244353
+
+
+N = int(input())
+
+# 条件を満たすものではなく、満たさないものから数えていく
+total = math.factorial(N**2)
