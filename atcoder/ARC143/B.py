@@ -3,9 +3,9 @@ import sys
 # sys.setrecursionlimit(10**6)
 # import decimal
 
-# import math
+import math
 # from collections import deque
-# import itertools
+import itertools
 # from collections import Counter
 # from queue import PriorityQueue
 # import heapq
@@ -25,4 +25,10 @@ MOD = 998244353
 N = int(input())
 
 # 条件を満たすものではなく、満たさないものから数えていく
-total = math.factorial(N**2)
+# 全体の選び方
+total = math.factorial(N**2) % MOD
+
+# 条件を満たさないものの個数
+cnt = 0
+for i in range(2, N**2):
+    pass

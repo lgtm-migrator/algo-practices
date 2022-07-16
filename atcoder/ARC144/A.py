@@ -17,4 +17,15 @@ sys.setrecursionlimit(10**6)
 input = sys.stdin.readline
 
 INF = 2 << 60
-MOD = 998244353
+
+N = int(input())
+
+head = N % 4
+body = N // 4
+num = str(4) * body
+if head != 0:
+    num = str(head) + num
+x = int(num)
+M = N * 2
+print(M)
+print(x)
