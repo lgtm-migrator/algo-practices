@@ -1,31 +1,33 @@
-from collections import deque
 N = int(input())
 S = list(map(str, input()))
 
-i = 1
+ans = []
+weight = 0
 
-W_list = [0]
-
+# 文字列は単に繋げるのではなく、配列で集めてから`"".join`した方が速い
 for c in S:
-    if c == "A":
-        W_list[-1] += 2
-    elif c == "B":
-        W_list[-1] += 1
+    if c == "C":
+        if weight % 2 == 0:
+            a_num = weight // 2
+            b_num = 0
+        else:
+            a_num = (weight - 1) // 2
+            b_num = 1
+        ans += ["A"] * a_num
+        ans += ["B"] * b_num
+        ans += ["C"]
+        weight = 0
     else:
-        W_list.append(0)
+        weight += 2 if c == "A" else 1
 
-ans = ""
-w = W_list[0]
-if w % 2 == 0:
-    ans += "".join(["A"] * (w // 2))
-else:
-    ans += "".join(["A"] * ((w - 1) // 2)) + "B"
-
-for w in W_list[1:]:
-    ans += "C"
-    if w % 2 == 0:
-        ans += "".join(["A"] * (w // 2))
+if weight != 0:
+    if weight % 2 == 0:
+        a_num = weight // 2
+        b_num = 0
     else:
-        ans += "".join(["A"] * ((w - 1) // 2)) + "B"
+        a_num = (weight - 1) // 2
+        b_num = 1
+    ans += ["A"] * a_num
+    ans += ["B"] * b_num
 
-print(ans)
+print("".join(ans))
