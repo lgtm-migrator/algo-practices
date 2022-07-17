@@ -13,8 +13,5 @@ import sys
 
 sys.setrecursionlimit(10**6)
 
-
-input = sys.stdin.readline
-
 INF = 2 << 60
 MOD = 998244353
