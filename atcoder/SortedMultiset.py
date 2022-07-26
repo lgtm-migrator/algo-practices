@@ -1,27 +1,11 @@
-from collections import defaultdict
-from typing import Generic, Iterable, Iterator, TypeVar, Union, List
-import datetime
-import re
-from bisect import bisect_left, bisect_right
-import random
-import heapq
-from queue import PriorityQueue
-from collections import Counter
-import itertools
-from collections import deque
+# https://github.com/tatyam-prime/SortedSet/blob/main/SortedMultiset.py
 import math
-import decimal
-import sys
-
-sys.setrecursionlimit(10**6)
-
-INF = 2 << 60
-MOD = 998244353
-
+from bisect import bisect_left, bisect_right, insort
+from typing import Generic, Iterable, Iterator, TypeVar, Union, List
 T = TypeVar('T')
 
 
-class SortedSet(Generic[T]):
+class SortedMultiset(Generic[T]):
     BUCKET_RATIO = 50
     REBUILD_RATIO = 170
 
@@ -35,10 +19,10 @@ class SortedSet(Generic[T]):
                     (i + 1) // bucket_size] for i in range(bucket_size)]
 
     def __init__(self, a: Iterable[T] = []) -> None:
-        "Make a new SortedSet from iterable. / O(N) if sorted and unique / O(N log N)"
+        "Make a new SortedMultiset from iterable. / O(N) if sorted / O(N log N)"
         a = list(a)
-        if not all(a[i] < a[i + 1] for i in range(len(a) - 1)):
-            a = sorted(set(a))
+        if not all(a[i] <= a[i + 1] for i in range(len(a) - 1)):
+            a = sorted(a)
         self._build(a)
 
     def __iter__(self) -> Iterator[T]:
@@ -55,7 +39,7 @@ class SortedSet(Generic[T]):
         return self.size
 
     def __repr__(self) -> str:
-        return "SortedSet" + str(self.a)
+        return "SortedMultiset" + str(self.a)
 
     def __str__(self) -> str:
         s = str(list(self))
@@ -75,21 +59,21 @@ class SortedSet(Generic[T]):
         i = bisect_left(a, x)
         return i != len(a) and a[i] == x
 
-    def add(self, x: T) -> bool:
-        "Add an element and return True if added. / O(√N)"
+    def count(self, x: T) -> int:
+        "Count the number of x."
+        return self.index_right(x) - self.index(x)
+
+    def add(self, x: T) -> None:
+        "Add an element. / O(√N)"
         if self.size == 0:
             self.a = [[x]]
             self.size = 1
-            return True
+            return
         a = self._find_bucket(x)
-        i = bisect_left(a, x)
-        if i != len(a) and a[i] == x:
-            return False
-        a.insert(i, x)
+        insort(a, x)
         self.size += 1
         if len(a) > len(self.a) * self.REBUILD_RATIO:
             self._build()
-        return True
 
     def discard(self, x: T) -> bool:
         "Remove an element and return True if removed. / O(√N)"
@@ -158,54 +142,3 @@ class SortedSet(Generic[T]):
                 return ans + bisect_right(a, x)
             ans += len(a)
         return ans
-
-
-class UnionFind():
-    def __init__(self, n):
-        self.n = n
-        self.parents = [-1] * n
-
-    def find(self, x):
-        if self.parents[x] < 0:
-            return x
-        else:
-            self.parents[x] = self.find(self.parents[x])
-            return self.parents[x]
-
-    def union(self, x, y):
-        x = self.find(x)
-        y = self.find(y)
-
-        if x == y:
-            return
-
-        if self.parents[x] > self.parents[y]:
-            x, y = y, x
-
-        self.parents[x] += self.parents[y]
-        self.parents[y] = x
-
-    def size(self, x):
-        return -self.parents[self.find(x)]
-
-    def same(self, x, y):
-        return self.find(x) == self.find(y)
-
-    def members(self, x):
-        root = self.find(x)
-        return [i for i in range(self.n) if self.find(i) == root]
-
-    def roots(self):
-        return [i for i, x in enumerate(self.parents) if x < 0]
-
-    def group_count(self):
-        return len(self.roots())
-
-    def all_group_members(self):
-        group_members = defaultdict(list)
-        for member in range(self.n):
-            group_members[self.find(member)].append(member)
-        return group_members
-
-    def __str__(self):
-        return '\n'.join(f'{r}: {m}' for r, m in self.all_group_members().items())
