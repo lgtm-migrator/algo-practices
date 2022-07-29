@@ -14,34 +14,29 @@ import sys
 
 sys.setrecursionlimit(10**6)
 
-
-input = sys.stdin.readline
-
 INF = 2 << 60
 
 
 N, a, b = map(int, input().split())
 
 A = list(map(int, input().split()))
-A.sort()
 
-print("A", A)
+l = min(A)
+r = max(A)
 
-lA = len(A)
 
-cur_i = 0
-cur_j = lA - 1
+while r - l > 1:
+    mid = l + (r - l) // 2
+    xi = 0
+    yi = 0
+    for ai in A:
+        if ai < mid:
+            xi += math.ceil((mid - ai) / a)
+        else:
+            yi += (ai - mid) // b
+    if xi <= yi:
+        l = mid
+    else:
+        r = mid
 
-while cur_i < cur_j:
-    print("cur_i", cur_i, "cur_j", cur_j)
-    A[cur_i] += a
-    A[cur_j] -= b
-    if cur_i < lA - 1 and A[cur_i] > A[cur_i + 1]:
-        A[cur_i] -= a
-        cur_i += 1
-    elif cur_j > 1 and A[cur_j] < A[cur_j - 1]:
-        A[cur_j] -= b
-        cur_j -= 1
-
-print("A", A)
-print(min(A))
+print(l)
