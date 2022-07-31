@@ -28,10 +28,11 @@ sums = defaultdict(list)
 
 dp = [[[0 for i in range(N+1)] for j in range(N+1)] for k in range(N+1)]
 
-for i in range(1, N+1):
-    for j in range(1, N+1):
-        s = sum(A[i:j+1])
-        dp[i][j][s % (j-i+1)] += 1
+for n in range(1, N):
+    for i in range(1, N+1):
+        for j in range(1, N+1):
+            s = sum(A[i:j+1])
+            dp[i][j][s % (j-i+1)] += 1
 
 
 for j in range(1, N+1):
