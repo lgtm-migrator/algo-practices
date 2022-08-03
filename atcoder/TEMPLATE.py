@@ -14,6 +14,10 @@ import decimal
 import sys
 
 sys.setrecursionlimit(10**6)
+# 文字列を入力する場合は改行が残る
+input = sys.stdin.readline
+# 文字列を入力する場合
+# input_str = input()[:-1]
 
 INF = 2 << 60
 MOD = 998244353
